@@ -6,6 +6,7 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .add_pagination import CustomPagination
 from .make_token import get_tokens_for_user
 from .models import Category, News, Comment, User
 from .serializers import CategorySerializer, NewsSerializer, CommentSerializer, UserSerializer, LoginSerializer, \
@@ -79,6 +80,7 @@ class NewsDetail(RetrieveUpdateDestroyAPIView):
 class CommentListCreate(ListCreateAPIView):
     serializer_class = CommentSerializer
     permission_classes = [CanReadComment | CanCreateComment]
+    pagination_class = CustomPagination
 
     def get_queryset(self):
         return Comment.objects.all()
